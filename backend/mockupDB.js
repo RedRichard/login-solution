@@ -3,7 +3,7 @@ const db = {
     {
       id: 1,
       email: "test@test.com",
-      password: "$2a$10$nccRFVmMr7Vvve609xTR/eKwjOAlybP2GkUN9uYUWqYnZWeNonf72",
+      password: "$2a$10$ExrmQjmwsDI/TCj.71Mh9eKSVydlSUgVnyZf1L9zdoZEhawe21Tgm",
       userName: "test",
     },
   ],

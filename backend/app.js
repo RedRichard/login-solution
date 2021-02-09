@@ -16,12 +16,17 @@ require("./passport");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log("Backend working on port: " + (process.env.PORT || 3000));
+// Route variables
+const userRoutes = require("./routes/users");
+
+app.use("/", userRoutes);
+
+app.listen(process.env.PORT || 9000, function () {
+  console.log("Backend working on port: " + (process.env.PORT || 9000));
   mockupDB.FindOne(
     {
       email: "test@test.com",
-      password: "$2a$10$nccRFVmMr7Vvve609xTR/eKwjOAlybP2GkUN9uYUWqYnZWeNonf72",
+      password: "$2a$10$ExrmQjmwsDI/TCj.71Mh9eKSVydlSUgVnyZf1L9zdoZEhawe21Tgm",
     },
     (user, err) => console.log("Usuario: " + user.email)
   );
