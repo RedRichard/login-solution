@@ -4,29 +4,27 @@ const express = require("express"),
   jwt = require("jsonwebtoken");
 
 // handle login logic
-router.post("/login", (req, res, next) => {
-  passport.authenticate("local", { session: false }, (err, user) => {
-    if (err || !user) {
-      return res.status(400).json({
-        message: err.message,
-      });
-    }
+router.post("/login", async (req, res, next) => {
+  passport.authenticate("login", async (err, user, info) => {
+    try {
+      if (err || !user) {
+        const error = new Error("Error");
 
-    req.login(user, { session: false }, (err) => {
-      if (err) {
-        res.send(err);
+        return next(error);
       }
-      const token = jwt.sign(user, "login-solution-secret");
 
-      return res.json({ user, token });
-    });
-  })(req, res);
+      req.login(user, { session: false }, async (error) => {
+        if (error) return next(error);
+
+        const body = { _id: user._id, username: user.username };
+        const token = jwt.sign(body, "login-solution-secret");
+
+        return res.json({ token });
+      });
+    } catch (error) {
+      return next(error);
+    }
+  })(req, res, next);
 });
-
-// router.post("/login", (req, res) => {
-//   res.status(200).json({
-//     token: "test123",
-//   });
-// });
 
 module.exports = router;

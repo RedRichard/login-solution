@@ -18,16 +18,16 @@ async function loginUser(credentials) {
 }
 
 function Login({ setToken }) {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  console.log("Email: " + email);
+  console.log("Username: " + username);
   console.log("Password: " + password);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let credentials = { email, password };
-    console.log("Submit: " + credentials.email);
+    let credentials = { username, password };
+    console.log("Submit: " + credentials.username);
     let token = await loginUser(credentials);
     console.log("Token: " + JSON.stringify(token.data));
     setToken(token.data);
@@ -38,12 +38,12 @@ function Login({ setToken }) {
       <Row className="justify-content-md-center">
         <Form>
           <h3>Login</h3>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
+          <Form.Group controlId="formBasicusername">
+            <Form.Label>Username</Form.Label>
             <Form.Control
-              // type="email"
-              placeholder="Enter email"
-              onChange={(e) => setEmail(e.target.value)}
+              // type="username"
+              placeholder="Enter username"
+              onChange={(e) => setUsername(e.target.value)}
             />
           </Form.Group>
 

@@ -1,62 +1,51 @@
 const passport = require("passport"),
   LocalStrategy = require("passport-local"),
-  mockupDB = require("./mockupDB"),
   bcrypt = require("bcrypt"),
+  User = require("./models/user"),
   JwtStrategy = require("passport-jwt").Strategy,
   ExtractJwt = require("passport-jwt").ExtractJwt;
 
 // Local Strategy
 const optsLocalStrategy = {
-  usernameField: "email",
+  usernameField: "username",
   passwordField: "password",
 };
 
 passport.use(
-  new LocalStrategy(optsLocalStrategy, async (email, password, done) => {
-    let user = null;
-    await mockupDB.FindOne(
-      {
-        email,
-        password,
-      },
-      (user, err) => {
-        if (!user) {
-          done({ type: "email", message: "Incorrect user" }, false);
-          return;
-        }
-        if (bcrypt.compareSync(password, user.password)) {
-          done(null, {
-            id: user.id,
-            email: user.email,
-            userName: user.userName,
-          });
-        } else {
-          done({ type: "password", message: "Incorrect password" }, false);
-        }
+  "login",
+  new LocalStrategy(optsLocalStrategy, async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username });
+
+      if (!user) {
+        return done(null, false, { message: "User not found" });
       }
-    );
+
+      const validate = await user.checkPassword(password);
+
+      if (!validate) {
+        return done(null, false, { message: "Wrong password" });
+      }
+
+      return done(null, user, { message: "Logged in Successfully" });
+    } catch (err) {
+      return done(err);
+    }
   })
 );
 
 // JWT strategy config
 const optsJwt = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: "login-solution-secret",
-  issuer: "issuer.login-solution.com",
-  audience: "login-solution.com",
+  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("JWT"),
 };
 
 passport.use(
-  new JwtStrategy(optsJwt, (jwt_payload, done) => {
-    mockupDB.FindId(jwt_payload, (user, err) => {
-      if (err) {
-        return done(err, false);
-      }
-      if (user) {
-        return done(null, user);
-      } else {
-        return done(null, false);
-      }
-    });
+  new JwtStrategy(optsJwt, async (token, done) => {
+    try {
+      return done(null, token.username);
+    } catch (error) {
+      done(error);
+    }
   })
 );

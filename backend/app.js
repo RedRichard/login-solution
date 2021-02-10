@@ -1,9 +1,20 @@
 const express = require("express"),
   app = express(),
-  mockupDB = require("./mockupDB"),
+  mongoose = require("mongoose"),
+  seedDB = require("./dbSeeds"),
   bodyParser = require("body-parser"),
   passport = require("passport"),
   cors = require("cors");
+
+// Mongoose config and connection to database:
+mongoose.connect("mongodb://localhost/login_solution", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
+
+// Seed DB
+seedDB();
 
 // Set up CORS
 app.use(cors());
@@ -17,18 +28,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Route variables
-const userRoutes = require("./routes/users");
+const userRoutes = require("./routes/users"),
+  dashboardRoutes = require("./routes/dashboard");
 
 app.use("/", userRoutes);
+app.use("/", passport.authenticate("jwt", { session: false }), dashboardRoutes);
 
 app.listen(process.env.PORT || 9000, function () {
   console.log("Backend working on port: " + (process.env.PORT || 9000));
-  mockupDB.FindOne(
-    {
-      email: "test@test.com",
-      password: "$2a$10$ExrmQjmwsDI/TCj.71Mh9eKSVydlSUgVnyZf1L9zdoZEhawe21Tgm",
-    },
-    (user, err) => console.log("Usuario: " + user.email)
-  );
-  mockupDB.FindId(2, (user, err) => console.log("usuario: " + err));
 });
