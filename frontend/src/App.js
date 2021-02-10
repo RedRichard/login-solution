@@ -9,7 +9,7 @@ import Login from "./components/pages/Login";
 import useToken from "./components/useToken";
 
 function App() {
-  const { token, setToken } = useToken();
+  const { token, setToken, removeToken } = useToken();
 
   if (!token) {
     return (
@@ -24,8 +24,11 @@ function App() {
     <BrowserRouter>
       <Header />
       <Switch>
-        <Route path="/" exact component={Dashboard} />
-        {/* <Route path="/login" exact component={Login} /> */}
+        <Route
+          path="/"
+          exact
+          component={() => <Dashboard removeToken={removeToken} />}
+        />
       </Switch>
     </BrowserRouter>
   );

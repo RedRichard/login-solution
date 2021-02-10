@@ -21,9 +21,6 @@ function Login({ setToken }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  console.log("Username: " + username);
-  console.log("Password: " + password);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     let credentials = { username, password };
