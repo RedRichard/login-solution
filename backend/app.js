@@ -7,7 +7,11 @@ const express = require("express"),
   cors = require("cors");
 
 // Mongoose config and connection to database:
-mongoose.connect("mongodb://localhost/login_solution", {
+const mongodbUrl = process.env.NODEJS_MONGODB_SERVICE_PORT
+  ? `${process.env.NODEJS_MONGODB_SCHEME}://${process.env.NODEJS_MONGODB_USERNAME}:${process.env.NODEJS_MONGODB_PASSWORD}@${process.env.NODEJS_MONGODB_SERVICE_PORT}`
+  : "mongodb://localhost/login_solution";
+
+mongoose.connect(mongodbUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -22,7 +26,7 @@ app.use(cors());
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
-require("./passport");
+require("./middleware/auth");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

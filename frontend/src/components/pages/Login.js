@@ -12,7 +12,9 @@ async function loginUser(credentials) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     data: JSON.stringify(credentials),
-    url: "http://localhost:9000/login",
+    url:
+      (process.env.REACT_APP_BACKEND_URL || "http://localhost:9000/") +
+      "login/",
   };
   return await Axios(options);
 }
