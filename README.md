@@ -4,9 +4,9 @@ A MERN stack app that implements JWT token authentication.
 
 ## Docker
 
-To run the app use the **docker-compose.yaml**.
+To run the app use the **docker-compose.yaml** file.
   
-  docker-compose -f ./docker-compose.yaml up
+    docker-compose -f ./docker-compose.yaml up
   
 Access services:
   - Frontend: localhost:9000
