@@ -9,8 +9,8 @@ To run the app use the **docker-compose.yaml** file.
     docker-compose -f ./docker-compose.yaml up
   
 Access services:
-  - Frontend: http://localhost:9000
-  - Backend: http://localhost:3000
+  - Frontend: http://localhost:3000
+  - Backend: http://localhost:9000
   - Mongo-Express (To check DB contents): http://localhost:8080 
 
 ## Backend
