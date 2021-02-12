@@ -16,7 +16,8 @@ Access services:
 ## Backend
 
 Developed with Node, Express and MongoDB.
-This API allows the user to get a token to log in.
+
+This server allows the user to get a token to log in.
 
 A local mongodb instance needs to be running on port 27017.
 
