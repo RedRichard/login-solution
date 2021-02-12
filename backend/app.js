@@ -38,6 +38,8 @@ const userRoutes = require("./routes/users"),
 app.use("/", userRoutes);
 app.use("/", passport.authenticate("jwt", { session: false }), dashboardRoutes);
 
-app.listen(process.env.PORT || 9000, function () {
-  console.log("Backend working on port: " + (process.env.PORT || 9000));
+app.listen(process.env.PORT || 9000, () => {
+  console.log("Server up on port: " + (process.env.PORT || 9000));
 });
+
+module.exports = app;

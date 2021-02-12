@@ -12,14 +12,13 @@ const data = [
   },
 ];
 
-async function seedDB() {
+function seedDB() {
   // Remove all campgrounds
   User.deleteMany({}, (err) => {
     if (err) {
       console.log(err);
     }
-    console.log("Removed users");
-    data.forEach(async (seed) => {
+    data.forEach((seed) => {
       User.create(seed, (err, user) => {
         if (err) {
           console.log(err);
@@ -28,6 +27,7 @@ async function seedDB() {
         }
       });
     });
+    console.log(`${data.length} users created`);
   });
 }
 

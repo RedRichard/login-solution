@@ -1,6 +1,4 @@
-FROM node:15.6.0-alpine3.10
-
-RUN apk update && apk add bash
+FROM node:15-slim
 
 RUN mkdir -p /app
 
