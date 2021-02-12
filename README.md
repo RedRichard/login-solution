@@ -2,6 +2,22 @@
 
 A MERN stack app that implements JWT token authentication.
 
+**Login page**
+
+<img src="https://github.com/RedRichard/login-solution/blob/master/images/login-solution-dashboard.png" width="600"/>
+
+The **dbSeeds.js** file creates 2 users whose data can be used to log in.
+
+    Username: test1
+    Password: test
+    
+    Username: test2
+    Password: test
+
+**Dashboard page**
+
+<img src="https://github.com/RedRichard/login-solution/blob/master/images/login-solution-login.png" width="600"/>
+
 ## Docker
 
 To run the app use the **docker-compose.yaml** file.
